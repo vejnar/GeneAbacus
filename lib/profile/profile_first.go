@@ -11,8 +11,8 @@ package profile
 import (
 	"github.com/biogo/hts/sam"
 
-	"github.com/vejnar/geneabacus/lib/esam"
-	"github.com/vejnar/geneabacus/lib/feature"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/esam"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/feature"
 )
 
 func ProfileFirst(areads []*sam.Record, onlyRead1 bool, paired bool, libraryR1Strand int8, overlap feature.FeatureOverlap, feat *feature.FeatureExt, pairCount float32, profileChanges *ProfileChange, profileNoCoordMapping bool, profileUntemplated int, profileNoUntemplated bool) (bool, error) {

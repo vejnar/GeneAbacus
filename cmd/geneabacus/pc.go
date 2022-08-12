@@ -18,9 +18,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/vejnar/geneabacus/lib/esam"
-	"github.com/vejnar/geneabacus/lib/feature"
-	"github.com/vejnar/geneabacus/lib/profile"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/esam"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/feature"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/profile"
 
 	"github.com/biogo/hts/bam"
 	"github.com/biogo/hts/sam"

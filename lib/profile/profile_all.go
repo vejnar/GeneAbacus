@@ -13,7 +13,7 @@ import (
 
 	"github.com/biogo/hts/sam"
 
-	"github.com/vejnar/geneabacus/lib/feature"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/feature"
 )
 
 func FragmentCoords(areads []*sam.Record, overlap feature.FeatureOverlap, feat *feature.FeatureExt, profileNoCoordMapping bool) (int, int) {

@@ -8,7 +8,7 @@ From high-throughput sequencing **mapped reads** ([SAM/BAM](https://samtools.git
 
 * Input
     * mRNA-seq, Ribo-seq, ChIP-seq, CLIP-seq, Structure-seq, Massively Parallel Reporter Assays (MPRAs) etc
-    * Any type of features, e.g. chromosomes, genes, mRNAs or constructs from MPRAs using the [FON](https://github.com/vejnar/fontools) or tab format.
+    * Any type of features, e.g. chromosomes, genes, mRNAs or constructs from MPRAs using the [FON](https://sr.ht/~vejnar/FONtools) or tab format.
     * *Unsorted* or sorted [SAM/BAM](https://samtools.github.io/hts-specs/) files. SAM files can be compressed (see `-sam_command_in`).
 * Filter reads by overlap, length, mapping quality, using a set of user-defined features, or randomly
 * Optionally use orientation (strand) of reads and features
@@ -117,7 +117,7 @@ Genomic profiles are directly viewable as genome browser tracks (default output 
 
 * Features
     * `-path_features` Path to features file
-    * `-format_features FON` (default) [FON](https://github.com/vejnar/fontools) format
+    * `-format_features FON` (default) [FON](https://sr.ht/~vejnar/FONtools) format
         Within FON, specify where to find the name of the features, their chromosome, coordinate list (such as exons), and strand:
         * `-fon_name` FON key for feature name (default "transcript_stable_id")
         * `-fon_chrom` FON key for chromosome or locus (default "chrom")
@@ -129,7 +129,7 @@ Genomic profiles are directly viewable as genome browser tracks (default output 
 
 * Filtering features. Filter input reads. Only reads mapping to features within the filter will be further processed. All options have the same name of the main features with the added suffix `_filter`. For example, filter features can be used to filter out reads from a Ribo-seq experiment that are not mapped to exons. Remaining reads can then be counted within coding-sequences (CDS) using `-format_features`.
     * `-path_features_filter` Path to filtering features file
-    * `-format_features_filter FON` (default) [FON](https://github.com/vejnar/fontools) format
+    * `-format_features_filter FON` (default) [FON](https://sr.ht/~vejnar/FONtools) format
         Within FON, specify where to find the name of the features, their chromosome, coordinate list (such as exons), and strand:
         * `-fon_name_filter` FON key for feature name (default "transcript_stable_id")
         * `-fon_chrom_filter` FON key for chromosome or locus (default "chrom")

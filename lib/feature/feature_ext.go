@@ -20,7 +20,7 @@ import (
 
 	"github.com/pierrec/lz4"
 
-	"github.com/vejnar/geneabacus/lib/cmapper"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/cmapper"
 )
 
 const (

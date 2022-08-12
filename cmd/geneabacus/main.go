@@ -20,9 +20,9 @@ import (
 
 	"github.com/biogo/store/interval"
 
-	"github.com/vejnar/geneabacus/lib/esam"
-	"github.com/vejnar/geneabacus/lib/feature"
-	"github.com/vejnar/geneabacus/lib/profile"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/esam"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/feature"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/profile"
 )
 
 const Version = "0.1"

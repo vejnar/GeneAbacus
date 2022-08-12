@@ -12,7 +12,7 @@ import (
 	"github.com/biogo/hts/sam"
 	"github.com/biogo/store/interval"
 
-	"github.com/vejnar/geneabacus/lib/esam"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/esam"
 )
 
 type FeatureOverlap struct {

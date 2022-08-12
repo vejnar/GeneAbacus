@@ -11,7 +11,7 @@ package profile
 import (
 	"github.com/biogo/hts/sam"
 
-	"github.com/vejnar/geneabacus/lib/feature"
+	"git.sr.ht/~vejnar/GeneAbacus/lib/feature"
 )
 
 // ProfileExtension is designed for unstranded single-end sequencing, so read2 and libraryR1Strand are ignored
