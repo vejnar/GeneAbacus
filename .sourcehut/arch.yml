@@ -1,7 +1,7 @@
 image: archlinux
 oauth: git.sr.ht/OBJECTS:RW git.sr.ht/REPOSITORIES:RO git.sr.ht/PROFILE:RO
 sources:
-    - git@git.sr.ht:~vejnar/ReadKnead
+    - git@git.sr.ht:~vejnar/GeneAbacus
 environment:
     repo: GeneAbacus
     packages: go hut
