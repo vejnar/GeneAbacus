@@ -1,0 +1,32 @@
+image: archlinux
+oauth: git.sr.ht/OBJECTS:RW git.sr.ht/REPOSITORIES:RO git.sr.ht/PROFILE:RO
+sources:
+    - git@git.sr.ht:~vejnar/ReadKnead
+environment:
+    repo: GeneAbacus
+    packages: go hut
+tasks:
+    - update: |
+        sudo pacman -Sy --noconfirm --noprogressbar archlinux-keyring
+        sudo pacman -Syu --noconfirm --noprogressbar $packages
+    - build: |
+        cd $repo
+        export GOROOT_FINAL="/usr/bin" CGO_ENABLED=0
+        export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
+        go build ./cmd/...
+    - archive-tag: |
+        cd $repo
+        tag=$(git describe --exact-match 2>/dev/null || true)
+        if [ -z "$tag" ]; then
+            echo "Current commit is not a tag; abort task"
+            exit 0
+        fi
+
+        # Publish archive
+        version=$(echo "$tag" | tr -d 'v')
+        git archive "v$version" -o "$repo-$version.tar.gz"
+        hut git artifact upload --rev "$tag" "$repo-$version.tar.gz"
+
+        # Publish binary
+        mv geneabacus geneabacus-linux-amd64
+        hut git artifact upload --rev "$tag" geneabacus-linux-amd64
