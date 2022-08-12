@@ -13,7 +13,14 @@ tasks:
         cd $repo
         export GOROOT_FINAL="/usr/bin" CGO_ENABLED=0
         export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
-        go build ./cmd/...
+        tag=$(git describe --exact-match 2>/dev/null || true)
+        if [ -z "$tag" ]; then
+            go build ./cmd/...
+        else
+            version=$(echo "$tag" | tr -d 'v')
+            echo "Building $repo $version"
+            go build -ldflags "-X main.version=$version" ./cmd/...
+        fi
     - archive-tag: |
         cd $repo
         tag=$(git describe --exact-match 2>/dev/null || true)

@@ -25,7 +25,7 @@ import (
 	"git.sr.ht/~vejnar/GeneAbacus/lib/profile"
 )
 
-const Version = "0.1"
+var version = "DEV"
 
 func parseStrand(strandRaw string) int8 {
 	if strandRaw == "+" || strandRaw == "1" || strandRaw == "+1" {
@@ -41,13 +41,13 @@ func main() {
 	// Arguments: General
 	var pathReport string
 	var nWorker, verboseLevel int
-	var appendOutput, verbose, version bool
+	var appendOutput, verbose, printVersion bool
 	flag.StringVar(&pathReport, "path_report", "", "Write report to path (stdout with -)")
 	flag.IntVar(&nWorker, "num_worker", 1, "Number of worker(s)")
 	flag.IntVar(&verboseLevel, "verbose_level", 0, "Verbose level")
 	flag.BoolVar(&appendOutput, "append", false, "Append to output count and profile (default create)")
 	flag.BoolVar(&verbose, "verbose", false, "Verbose")
-	flag.BoolVar(&version, "version", false, "Print version and quit")
+	flag.BoolVar(&printVersion, "version", false, "Print version and quit")
 	// Arguments: Input
 	var pathSAMsRaw, pathBAMsRaw, rawSAMCmdIn, pathFeatures, formatFeatures, fonName, fonChrom, fonStrand, fonCoords, featureStrandRaw, pathFeaturesFilter, formatFeaturesFilter, fonNameFilter, fonChromFilter, fonStrandFilter, fonCoordsFilter, featureStrandRawFilter, libraryR1StrandRaw string
 	var ignoreNHTag, paired, includeMissingInFilter bool
@@ -116,8 +116,8 @@ func main() {
 	flag.Parse()
 
 	// Version
-	if version {
-		fmt.Println(Version)
+	if printVersion {
+		fmt.Println(version)
 		os.Exit(0)
 	}
 
