@@ -46,6 +46,7 @@ type Packet struct {
 type Cache struct {
 	Packets     []Packet
 	LastPacket  int
+	InputCount  float64
 	MultiCounts []float64
 }
 
@@ -187,6 +188,9 @@ func PConFeature(pathSAMs []esam.PathSAM, SAMCmdIn []string, features []feature.
 	if err != nil {
 		return nAlign, err
 	}
+
+	// Init. input counter
+	var inputCount float64
 
 	// Init. read or multiplicity counter
 	var multiSets []set.Interface
@@ -386,6 +390,27 @@ func PConFeature(pathSAMs []esam.PathSAM, SAMCmdIn []string, features []feature.
 						// Default to not keeping pair
 						apairKeep = false
 
+						// Alignment multiplicity
+						if ignoreNHTag {
+							pairMulti = 1
+						} else {
+							tag, found := pair.Reads[0].Tag([]byte{'N', 'H'})
+							if found == false {
+								return fmt.Errorf("Missing NH tag")
+							} else {
+								switch v := tag.Value().(type) {
+								case uint8:
+									pairMulti = int(v)
+								case uint16:
+									pairMulti = int(v)
+								}
+							}
+						}
+						pairCount = 1. / float32(pairMulti)
+
+						// Input
+						c.InputCount += 1. / float64(pairMulti)
+
 						// Read length (both mates have to be desired length)
 						if len(readLengths) > 0 {
 							apairLengthOK := true
@@ -447,24 +472,6 @@ func PConFeature(pathSAMs []esam.PathSAM, SAMCmdIn []string, features []feature.
 								continue
 							}
 						}
-
-						// Alignment multiplicity
-						if ignoreNHTag {
-							pairMulti = 1
-						} else {
-							tag, found := pair.Reads[0].Tag([]byte{'N', 'H'})
-							if found == false {
-								return fmt.Errorf("Missing NH tag")
-							} else {
-								switch v := tag.Value().(type) {
-								case uint8:
-									pairMulti = int(v)
-								case uint16:
-									pairMulti = int(v)
-								}
-							}
-						}
-						pairCount = 1. / float32(pairMulti)
 
 						// Get features overlap with reads
 						featuresOverlap := feature.OverlapFeatureRead(pair.Reads, libraryR1Strand, trees)
@@ -611,6 +618,9 @@ func PConFeature(pathSAMs []esam.PathSAM, SAMCmdIn []string, features []feature.
 			multisCounts[i] += c.MultiCounts[i]
 			c.MultiCounts[i] = 0.
 		}
+		// Input count
+		inputCount += c.InputCount
+		c.InputCount = 0.
 		// Reset
 		c.LastPacket = 0
 		pool <- c
@@ -681,7 +691,7 @@ func PConFeature(pathSAMs []esam.PathSAM, SAMCmdIn []string, features []feature.
 	}
 	// Output: Report
 	if pathReport != "" {
-		err = WriteReport(pathReport, countMultis, countTotalRealRead, multiSets, multisCounts)
+		err = WriteReport(pathReport, inputCount, countMultis, countTotalRealRead, multiSets, multisCounts)
 		if err != nil {
 			return nAlign, err
 		}

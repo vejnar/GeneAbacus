@@ -16,8 +16,9 @@ import (
 	"gopkg.in/fatih/set.v0"
 )
 
-func WriteReport(pathReport string, countMultis []int, countTotalRealRead bool, multiSets []set.Interface, multisCounts []float64) (err error) {
+func WriteReport(pathReport string, inputCount float64, countMultis []int, countTotalRealRead bool, multiSets []set.Interface, multisCounts []float64) (err error) {
 	countReport := make(map[string]uint32)
+	countReport["input"] = uint32(inputCount)
 	for i := 0; i < len(countMultis); i++ {
 		if countMultis[i] == 1 {
 			if countTotalRealRead {
@@ -33,6 +34,7 @@ func WriteReport(pathReport string, countMultis []int, countTotalRealRead bool, 
 			}
 		}
 	}
+	countReport["output"] = countReport["align_unique"] + countReport["align_multi"]
 	report, _ := json.MarshalIndent(countReport, "", "  ")
 	if pathReport != "-" {
 		if f, err := os.Create(pathReport); err != nil {
