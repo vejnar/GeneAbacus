@@ -35,5 +35,5 @@ tasks:
         hut git artifact upload --rev "$tag" "$repo-$version.tar.gz"
 
         # Publish binary
-        mv geneabacus geneabacus-linux-amd64
-        hut git artifact upload --rev "$tag" geneabacus-linux-amd64
+        mv geneabacus "geneabacus-linux-amd64-$version"
+        hut git artifact upload --rev "$tag" "geneabacus-linux-amd64-$version"
