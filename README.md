@@ -1,4 +1,4 @@
-# ![GeneAbacus](doc/logo.svg)
+# <img src="https://raw.githubusercontent.com/vejnar/GeneAbacus/main/img/logo.svg" alt="GeneAbacus" width="85%" />
 
 From high-throughput sequencing **mapped reads** ([SAM/BAM](https://samtools.github.io/hts-specs/)), **GeneAbacus**:
 * Creates **profiles** representing coverage depth per nucleotide,
@@ -27,7 +27,7 @@ From high-throughput sequencing **mapped reads** ([SAM/BAM](https://samtools.git
 
 2. **Mapping coordinates: DNA and RNA profiles**. HTS experiments are usually mapped to the genome. From the mapped reads, tools providing genome coverage are very useful to generate genomic profiles used for data visualizing in genome browsers. However, while downstream analyses for experiments based on genomic DNA, such as ChIP-seq, can directly use genome coverage of mapped reads, analysis of RNA-based experiments are less straightforward. Most RNAs are strand-specific and/or spliced. Using an algorithm to map coordinates from genomic DNA to RNA, **GeneAbacus generates strand-specific RNA profiles**. RNA profiles can then be directly used for downstream analysis.
 
-    ![Mapping coordinate](doc/coordmap.svg)
+    ![Mapping coordinate](img/coordmap.svg)
 
 3. **Flexibility: Output formats**. GeneAbacus can export to [BedGraph](https://genome.ucsc.edu/goldenPath/help/bedgraph.html) files and in text form (CSV). While BedGraph is widely used, making it appropriate for sharing data, it is not trivial to parse these files efficiently. To overcome this hurdle, **GeneAbacus exports to an *ad-hoc* binary format**. The [binary](#profile-binary-format) format is a simple memory dump, together with a checksum for integrity. This makes it fast and easy to load data for downstream analysis in Python or other environments.
 
@@ -47,7 +47,7 @@ From high-throughput sequencing **mapped reads** ([SAM/BAM](https://samtools.git
 
 ## Download
 
-See [tags](/../../tags) page.
+See [refs](https://git.sr.ht/~vejnar/GeneAbacus/refs) page for tarball and executable.
 
 ## Examples
 
@@ -169,7 +169,7 @@ Genomic profiles are directly viewable as genome browser tracks (default output 
 
 * `-profile_type` Profile type: *first*, *last*, *first-last*, *position*, *all*, *all-extension* or *all-slice*
 
-    ![Profile types](doc/profiles.svg)
+    ![Profile types](img/profiles.svg)
 * *first*
     * `-profile_no_untemplated` Include only reads w/o untemplated nucleotide in the profile
     * `-profile_untemplated` Remove maximum untemplated nucleotides
@@ -188,7 +188,7 @@ Genomic profiles are directly viewable as genome browser tracks (default output 
 
 The profile *binary* format consists of a header followed by the profile of each feature concatenated together. Data is stored as a raw sequence of bytes (in little-endian order) in a file with the `.bin` extension.
 
-![Binary format](doc/format.svg)
+![Binary format](img/format.svg)
 
 In the current version (3), the header contains 3 fields:
 1. A version number stored as *uint8* (or *byte*)
