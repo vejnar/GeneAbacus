@@ -15,6 +15,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/klauspost/compress/zstd"
 )
 
 type Feature struct {
@@ -50,13 +52,28 @@ func (f ByChrom) Less(i, j int) bool { return f[i].Chrom < f[j].Chrom }
 
 // OpenFON parses a "Feature Object Notation" string and returns a list of Feature
 func OpenFON(jpath, fonName, fonChrom, fonStrand, fonCoords string) (features []Feature, err error) {
+	var d *json.Decoder
+	// Open file
 	jfos, err := os.Open(jpath)
 	if err != nil {
 		return
 	}
 	defer jfos.Close()
 
-	d := json.NewDecoder(jfos)
+	if strings.HasSuffix(jpath, ".zst") {
+		var fzst *zstd.Decoder
+		fzst, err = zstd.NewReader(jfos)
+		if err != nil {
+			return
+		}
+		defer fzst.Close()
+
+		d = json.NewDecoder(fzst)
+	} else {
+		d = json.NewDecoder(jfos)
+	}
+
+	// Parse
 	d.UseNumber()
 	var rawFON interface{}
 	if err = d.Decode(&rawFON); err != nil {
