@@ -675,9 +675,11 @@ func PConFeature(pathSAMs []esam.PathSAM, SAMCmdIn []string, features []feature.
 	}
 
 	// Output: Count
-	err = feature.WriteCounts(featureExts, countPath, countMultis, countTotals, appendOutput)
-	if err != nil {
-		return nAlign, err
+	if countPath != "" {
+		err = feature.WriteCounts(featureExts, countPath, countMultis, countTotals, appendOutput)
+		if err != nil {
+			return nAlign, err
+		}
 	}
 	// Output: Profile
 	if doProfile {
