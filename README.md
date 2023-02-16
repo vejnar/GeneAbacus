@@ -217,4 +217,4 @@ array([0., 0., 21., ..., 0., 3., 0.], dtype=float32)
 
 *GeneAbacus* is distributed under the Mozilla Public License Version 2.0 (see /LICENSE).
 
-Copyright (C) 2015-2022 Charles E. Vejnar
+Copyright © 2015-2023 Charles E. Vejnar
