@@ -234,12 +234,17 @@ func main() {
 	countTotals := make([]float64, 1+len(countMultis)*2)
 	countTotalInput := false
 	if countTotalsRaw != "" {
+		nTotal := 0
 		for it, t := range strings.Split(countTotalsRaw, ",") {
 			tf, err := strconv.ParseFloat(t, 64)
 			if err != nil {
 				log.Fatal(err)
 			}
 			countTotals[1+(2*it)] = tf
+			nTotal += 1
+		}
+		if nTotal != len(countMultis) {
+			log.Fatal("-count_totals provides ", nTotal, " total(s): ", len(countMultis), " expected (one total per unique value from -count_multis and -profile_multi must be provided)")
 		}
 		countTotalInput = true
 	}
